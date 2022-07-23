@@ -4,6 +4,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   origin: originLocation,
   request,
 }) => {
+  console.info('request');
+  console.info(request);
   switch (request.method) {
     case 'hello':
       return wallet.request({
@@ -18,6 +20,17 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
           },
         ],
       });
+    case 'sendmsg':
+      return wallet.request({
+        method: 'snap_confirm',
+        params: [
+          {
+            prompt: `Send Message?`,
+            description: `Would you like to send the following message to ${(request.params as any).receiver.splice(6)}...?`,
+            textAreaContent: (request.params as any).message
+          }
+        ]
+      })
     default:
       throw new Error('Method not found.');
   }
