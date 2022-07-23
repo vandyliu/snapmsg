@@ -7,6 +7,7 @@ import snapManifest from '../snap.manifest.json';
 import { JsonRpcError } from 'json-rpc-engine';
 import {PrivyClient, SiweSession} from '@privy-io/privy-browser';
 import { EthereumProvider } from '@privy-io/privy-browser/dist/sessions/siwe';
+import { MessageList } from '../components/MessageList';
 
 const Container = styled.div`
   display: flex;
@@ -32,11 +33,15 @@ const Button = styled.button`
   }
 `
 
+const PRIVY_API_KEY = process.env.REACT_APP_PRIVY_API_KEY || '0';
+
 const Home: NextPage = () => {
   const [snapId, setSnapId] = useState('');
   const [text, setText] = useState('');
   const [receiver, setReceiver] = useState('');
   const [currentUser, setCurrentUser] = useState('');
+  const [messages, setMessages] = useState({} as any);
+  const [client, setClient] = useState(null as PrivyClient | null);
 
   // run only client-side
   useEffect(() => {
@@ -47,7 +52,20 @@ const Home: NextPage = () => {
     } else {
       setSnapId(`npm:${snapManifest.source.location.npm.packageName}`);
     }
+    if (document.readyState === "complete" && !client) {
+      const session = new SiweSession(PRIVY_API_KEY, window.ethereum as unknown as EthereumProvider);
+      const client = new PrivyClient({session: session});
+      setClient(client);
+    }
   }, []);
+
+  useEffect(() => {
+    const getMessagesInner = async () => {
+      const messages = await getMessages(currentUser);
+      setMessages(messages);
+    }
+    getMessagesInner().catch(console.error);
+  }, [currentUser])
 
   const connect = async () => {
     const response = await window.ethereum?.request({
@@ -58,7 +76,6 @@ const Home: NextPage = () => {
         },
       ],
     });
-    console.log('response to connect');
     console.log(JSON.stringify(response));
     if (response && (response as any).accounts && (response as any).accounts.length > 0) {
       setCurrentUser((response as any).accounts[0])
@@ -81,8 +98,19 @@ const Home: NextPage = () => {
     }
   };
 
+  const checkClient = () => {
+    if (!client) {
+      console.error("PrivyClient not ready");
+      return false;
+    }
+    console.log("PrivyClient is ready");
+    return true;
+  }
 
-  const updateMessages = async (client: PrivyClient, user: string, otherUser: string, message: string, isSender: boolean) => {
+  const getMessages = async (user: string) => {
+    if (!checkClient()) return;
+    checkConnected();
+
     const rawMessages = await client.get(user, 'inbox')
     let messages;
     try {
@@ -90,7 +118,20 @@ const Home: NextPage = () => {
     } catch(e) {
       messages = {};
     }
-    console.log('messages from get', rawMessages);
+    return messages;
+  }
+
+  const checkConnected = () => {
+    if (!currentUser) {
+      console.error("Connect first");
+    }
+  }
+
+  const updateMessages = async (user: string, otherUser: string, message: string, isSender: boolean) => {
+    if (!checkClient()) return;
+    checkConnected();
+
+    const messages = await getMessages(user);
     const receiverMessages = (messages as any)[otherUser] ?? [];
     messages[otherUser] = receiverMessages;
     messages[otherUser].push({
@@ -127,12 +168,9 @@ const Home: NextPage = () => {
         setText('');
 
         // if approved then send message via privy
-        const PRIVY_API_KEY = 'dqubqwb2qQQqDemJ_RnkInt-HdBpv17T-3-v763ZYQA=';
-        const session = new SiweSession(PRIVY_API_KEY, window.ethereum as unknown as EthereumProvider);
-        const client = new PrivyClient({session: session});
-        updateMessages(client, currentUser, receiver, message, true);
+        updateMessages(currentUser, receiver, message, true);
         if (currentUser !== receiver) {
-          updateMessages(client, receiver, currentUser, message, false);
+          updateMessages(receiver, currentUser, message, false);
         }
       } else {
         console.log("reject but good")
@@ -176,6 +214,8 @@ const Home: NextPage = () => {
       <label htmlFor={"receiverInput"}>Receiver</label>
       <input id={"receiverInput"} value={receiver} onChange={(e) => {setReceiver(e.target.value)}}></input>
       <Button disabled={!text || !receiver} onClick={() => sendMsg(receiver, text)}>Send Msg</Button>
+
+      <MessageList messages={messages} receiver={receiver} />
     </Container>
   );
 };

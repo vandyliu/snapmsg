@@ -16,6 +16,6 @@
     "incremental": true
   },
   "files": ["./node_modules/@metamask/snap-types/global.d.ts"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx"],
   "exclude": ["node_modules"]
 }

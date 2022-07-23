@@ -3,6 +3,7 @@
 dist/
 coverage/
 public/
+.env
 
 # Logs
 logs

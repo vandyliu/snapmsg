@@ -26,7 +26,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
         params: [
           {
             prompt: `Send Message?`,
-            description: `Would you like to send the following message to ${(request.params as any).receiver.splice(6)}...?`,
+            description: `Would you like to send the following message to ${(request.params as any).receiver.slice(0, 6)}...?`,
             textAreaContent: (request.params as any).message
           }
         ]
