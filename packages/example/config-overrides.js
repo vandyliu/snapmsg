@@ -12,6 +12,9 @@ module.exports = function override(config, env) {
         buffer: require.resolve('buffer'),
         stream: require.resolve('stream-browserify'),
     };
+    config.resolve.alias = {
+        handlebars: 'handlebars/dist/handlebars.min.js'
+    }
     config.plugins.push(
         new webpack.ProvidePlugin({
             process: 'process/browser',

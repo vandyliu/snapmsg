@@ -27,6 +27,8 @@ import {
   Segment,
   Button,
 } from 'semantic-ui-react';
+import { ChatList, MessageList, Input } from "react-chat-elements";
+import "react-chat-elements/dist/main.css";
 
 function App() {
   const [connected, setConnectStatus] = useState(false);
@@ -35,6 +37,9 @@ function App() {
   const [value, setValue] = useState(undefined);
   const { feeRate } = useFeeRate(network);
   const { txList, addTx, refresh } = useTransaction(network);
+
+  const [currentMessage, setCurrentMessage] = useState('');
+
 
   const connectCallback = () => setConnectStatus(true);
 
@@ -56,6 +61,7 @@ function App() {
 
   const onSendClick = async () => {
     try {
+      console.log('eth address', target);
       const psbt = genreatePSBT(
         { address: target, value: btcToSatoshi(value) },
         utxoList,
@@ -80,10 +86,8 @@ function App() {
     }
   };
 
-  const lastReceiveAddress =
-    recieveAddressList.length > 0
-      ? recieveAddressList[recieveAddressList.length - 1]
-      : undefined;
+  const messageListReferance = React.createRef();
+  const inputReferance = React.createRef();
 
   return (
     <div className="App">
@@ -92,8 +96,86 @@ function App() {
         onConnect={() => connect(connectCallback)}
       />
       {connected ? (
-        <>
-          <Address
+        <div className="container">
+          <div className="chatList">
+            <ChatList
+              id={0}
+              lazyLoadingImage={'false'}
+              dataSource={[
+                {
+                    avatar: 'https://facebook.github.io/react/img/logo.svg',
+                    alt: 'Reactjs',
+                    title: 'Facebook',
+                    subtitle: 'What are you doing?',
+                    date: new Date(),
+                    unread: 0,
+                    id: 0
+                },
+                {
+                  avatar: 'https://facebook.github.io/react/img/logo.svg',
+                  alt: 'Reactjs',
+                  title: 'Facebook',
+                  subtitle: 'What are you doing?',
+                  date: new Date(),
+                  unread: 0,
+                  id: 0
+              }
+              ]}
+            />
+          </div>
+        <div className="messageList">
+        <MessageList
+          referance={messageListReferance}
+          className='message-list'
+          lockable={true}
+          toBottomHeight={'100%'}
+          downButton={false}
+          downButtonBadge={0}
+          sendMessagePreview={false}
+          dataSource={[
+              {
+                  id: 0,
+                  position: 'right',
+                  type: 'text',
+                  text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+                  date: new Date(),
+                  title: '',
+                  focus: false,
+                  titleColor: 'black',
+                  forwarded: false,
+                  removeButton: true,
+                  replyButton: false,
+                  status: "sent",
+                  notch: true,
+                  retracted: false
+              },
+              {
+                id: 1,
+                position: 'left',
+                type: 'text',
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+                date: new Date(),
+                title: '',
+                focus: false,
+                titleColor: 'black',
+                forwarded: false,
+                removeButton: true,
+                replyButton: false,
+                status: "sent",
+                notch: true,
+                retracted: false
+            }
+          ]} />
+          <Input
+              maxHeight={100}
+              minHeight={50}
+              referance={inputReferance}
+              placeholder="Type here..."
+              multiline={true}
+              rightButtons={<Button backgroundColor="black" text="Send" />}
+          />
+          </div>
+          {/* <Address
             onGetPubkey={() => getExtendedPublicKey(network, setPubKey)}
             network={network}
             setNetwork={setNetwork}
@@ -102,9 +184,9 @@ function App() {
             balance={satoshiToBTC(
               utxoList.reduce((acc, current) => acc + current.value, 0),
             )}
-          />
+          /> */}
 
-          <Segment>
+          {/* <Segment>
             <Grid columns={2} relaxed="very" stackable>
               <Grid.Column>
                 <Header as="h3">Send Transaction</Header>
@@ -143,12 +225,11 @@ function App() {
               </Button>
             </Header>
             <TransactionList items={txList} network={network} />
-          </Segment>
-        </>
+          </Segment> */}
+        </div>
       ) : (
         <Banner />
       )}
-      <PageFooter />
     </div>
   );
 }

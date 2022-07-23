@@ -1,5 +1,6 @@
 import { MetaMaskInpageProvider } from '@metamask/providers';
 import { BitcoinNetwork, BitcoinScriptType } from '../interface';
+
 declare global {
   interface Window {
     ethereum: MetaMaskInpageProvider;
@@ -21,6 +22,7 @@ export async function connect(cb: Function) {
   });
 
   if (result) {
+
     cb();
   }
 }
