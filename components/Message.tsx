@@ -56,7 +56,10 @@ const MessageBubbleThem = styled.div`
     }
 `
 
-export const Message = (message: string, timestamp: string | Date, isSender: boolean) => {
+const Message = (message: string, timestamp: string | Date, isSender: boolean) => {
+    console.log(timestamp);
     const Bubble = isSender ? MessageBubbleSelf : MessageBubbleThem
-    return <Bubble><p>{message}</p></Bubble>;
+    return <Bubble>{message}</Bubble>;
 }
+
+export default Message;
