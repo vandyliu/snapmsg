@@ -9,21 +9,66 @@ import {PrivyClient, SiweSession} from '@privy-io/privy-browser';
 import { EthereumProvider } from '@privy-io/privy-browser/dist/sessions/siwe';
 import { MessageList } from '../components/MessageList';
 
+const MessageBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const SendButtonText = styled.span`
+  margin-bottom: -3px;
+`
+
+const MessageInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1em;
+`
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1em;
 `
 
+const Label = styled.h4`
+  font-size: 1em;
+  padding-bottom: 2px;
+  margin-bottom: 2px;
+`
+
 const ReceiverInput = styled.input`
-  height: 10em;
+  font-size: 1em;
+  padding: 7px 9px;
+  border-radius: 4px;
+  border: 2px solid #666;
+  margin-bottom: 0.5em;
+  width: 25em;
+`
+
+const MessageInput = styled.input`
+font-size: 1em;
+padding: 7px 9px;
+border-radius: 4px;
+border: 2px solid #666;
+margin-bottom: 0.5em;
+width: 100%;
+height: 3em;
+box-sizing: border-box;
+border-radius: 4px;
+text-color: #d2d2d2;
+background-color: #212121;
+resize: none;
 `
 
 const Button = styled.button`
   margin-top: 0.5em;
   border: none;
   border-radius: 6px;
-  padding: 0.6em 2em;
+  padding: 0.6em 1em;
+  width: 80px;
+  text-align: center;
+  font-weight: 500;
   :hover {
     cursor: pointer;
   }
@@ -37,7 +82,16 @@ const Button = styled.button`
   }
 `
 
-const PRIVY_API_KEY = process.env.REACT_APP_PRIVY_API_KEY || '0';
+const SendButton = styled(Button)`
+font-size: 24px;
+font-color: white;
+margin-top: 0;
+height: 2em;
+width: 60px;
+margin-left: 10px;
+`
+
+const PRIVY_API_KEY = process.env.REACT_APP_PRIVY_API_KEY || '2Nw-liP1OAAzl7757r1s-tWAMLqq4RUq2H-vIGhAN6o=';
 
 const Home: NextPage = () => {
   const [snapId, setSnapId] = useState('');
@@ -207,7 +261,7 @@ const Home: NextPage = () => {
 
   return (
     <Container>
-      <h1>Hello, Snaps!</h1>
+      <h1>SnapMsg 📨</h1>
       <details>
         <summary>Instructions</summary>
         <ul>
@@ -229,11 +283,15 @@ const Home: NextPage = () => {
       <br />
 
       { currentUser ? <>
-      <label htmlFor={"receiverInput"}>Receiver</label>
-      <ReceiverInput id={"receiverInput"} value={receiver} onChange={(e) => {setReceiver(e.target.value.toLowerCase())}} />
+      <Label htmlFor={"receiverInput"}>Receiver</Label>
+      <ReceiverInput placeholder={'0x'} id={"receiverInput"} value={receiver} onChange={(e) => {setReceiver(e.target.value.toLowerCase())}} />
+      <MessageBox>
       <MessageList messages={receiverMessages} />
-      <input value={text} onChange={(e) => {setText(e.target.value)}}></input>
-      <Button disabled={!text || !receiver} onClick={() => sendMsg(receiver, text)}>Send Msg</Button>
+      <MessageInputContainer>
+        <MessageInput onChange={(e) => {setText(e.target.value)}} />
+        <SendButton disabled={!text || !validateInputAddresses(receiver)} onClick={() => sendMsg(receiver, text)}><SendButtonText>></SendButtonText></SendButton>
+      </MessageInputContainer>
+      </MessageBox>
       </> : 
       <>
         <p>Please connect first</p>

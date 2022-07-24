@@ -1,17 +1,39 @@
 import styled from 'styled-components';
 
+const MsgSelf = styled.div`
+    display: flex;
+    max-width: 75%;
+    flex-direction: column;
+    position: relative;
+    word-wrap: break-word;
+    align-self: flex-end;
+    align-items: flex-end;
+    width: fit-content;
+`
+ 
+const MsgThem = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    word-wrap: break-word;
+    align-items: flex-start;
+    width: fit-content;
+`
+
 const MessageBubbleSelf = styled.div`
     display: flex;
     border-radius: 1.15rem;
-    line-height: 1.25;
+    line-height: 0;
     max-width: 75%;
     padding: 0.5rem .875rem;
     position: relative;
     word-wrap: break-word;
     align-self: flex-end;
-    background-color: #2561ED;
-    color: #fff;
-    margin: 0.25rem 0 0;
+    align-items: flex-end;
+    background-color: #0084ff;
+    color: #e4fbff;
+    margin: 0 0.4rem 0.1rem;
+    font-weight: 450;
     width: fit-content;
     &:before {
         border-bottom-left-radius: 0.8rem 0.7rem;
@@ -31,15 +53,16 @@ const MessageBubbleSelf = styled.div`
 const MessageBubbleThem = styled.div`
     display: flex;
     border-radius: 1.15rem;
-    line-height: 1.25;
+    line-height: 0;
     max-width: 75%;
-    padding: 0.5rem .875rem;
+    padding: 0.5rem 0.875rem;
     position: relative;
     word-wrap: break-word;
     align-items: flex-start;
-    background-color: #e5e5ea;
-    color: #000;
-    margin: 0.25rem 0 0;
+    background-color: #2a2a2a;
+    color: #c9cbce;
+    margin: 0 0.4rem 0.1rem;
+    font-weight: 450;
     width: fit-content;
     &:before {
         border-bottom-right-radius: 0.8rem 0.7rem;
@@ -56,6 +79,32 @@ const MessageBubbleThem = styled.div`
     }
 `
 
+const Container = styled.div`
+    min-height: 20em;
+    max-height: 20em;
+    overflow-y: scroll;
+    padding: 1em 0;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+`
+
+const Timestamp = styled.p`
+color: #666;
+font-size: 10px;
+margin-bottom: 3px;
+margin-left: 1em;
+margin-right: 1em;
+`
+
+const NoMessages = styled.h3`
+font-size: 2em;
+padding-bottom: 2px;
+margin-bottom: 2px;
+align-items: center;
+text-align: center;
+`
+
 const isEmptyObject = (obj) => {
     return (obj && Object.keys(obj).length === 0
     && Object.getPrototypeOf(obj) === Object.prototype);
@@ -63,23 +112,23 @@ const isEmptyObject = (obj) => {
 
 export const MessageList = (messages: any[]) => {
     if (!messages){
-        return <p>{"No messages"}</p>;
+        return <Container><NoMessages>{"No messages"}</NoMessages></Container>;
     }
     const innerMessages = (messages as any).messages;
     if (innerMessages.length > 0) console.log('0th message', innerMessages[0]);
     console.info('innerMessages info', innerMessages);
     if (innerMessages.length === 0) {
-        return <p>{"No messages"}</p>
+        return <Container><NoMessages>{"No messages"}</NoMessages></Container>;
     }
     const filteredInnerMessages = innerMessages.filter((msg) => {return !isEmptyObject(msg)});
     console.log('filteredinner', filteredInnerMessages);
-    return <> 
+    return <Container> 
         {filteredInnerMessages.map(msg => {
             return msg.isSender ?
-            <MessageBubbleSelf><p>{msg.message}</p></MessageBubbleSelf> :
-            <MessageBubbleThem><p>{msg.message}</p></MessageBubbleThem>})
+            <MsgSelf><Timestamp>{new Date(msg.timestamp).toLocaleString() }</Timestamp><MessageBubbleSelf><p>{msg.message}</p></MessageBubbleSelf></MsgSelf> :
+            <MsgThem><Timestamp>{new Date(msg.timestamp).toLocaleString() }</Timestamp><MessageBubbleThem><p>{msg.message}</p></MessageBubbleThem></MsgThem>})
         }
-    </>;
+    </Container>;
 }
 
 export default MessageList;
