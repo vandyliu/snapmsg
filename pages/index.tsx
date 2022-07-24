@@ -15,7 +15,15 @@ const MessageBox = styled.div`
 `
 
 const SendButtonText = styled.span`
-  margin-bottom: -3px;
+position: relative;
+top: -3px;
+left: -1px;
+`
+
+const CameraButtonText = styled.span`
+top: -8px;
+left: -10px;
+position: relative;
 `
 
 const MessageInputContainer = styled.div`
@@ -266,16 +274,11 @@ const Home: NextPage = () => {
         <summary>Instructions</summary>
         <ul>
           {/* eslint-disable-next-line react/no-unescaped-entities*/}
-          <li>First, click "Connect". Then, try out the other Buttons!</li>
+          <li>Install the Snap with the Connect button</li>
           <li>Please note that:</li>
           <ul>
             <li>
-              The <code>snap.manifest.json</code> and <code>package.json</code>{' '}
-              must be located in the server root directory..
-            </li>
-            <li>
-              The Snap bundle must be hosted at the location specified by the{' '}
-              <code>location</code> field of <code>snap.manifest.json</code>.
+              Receiver must be a valid 42 character wallet address.
             </li>
           </ul>
         </ul>
@@ -289,6 +292,7 @@ const Home: NextPage = () => {
       <MessageList messages={receiverMessages} />
       <MessageInputContainer>
         <MessageInput onChange={(e) => {setText(e.target.value)}} />
+        <SendButton><CameraButtonText>📷</CameraButtonText></SendButton>
         <SendButton disabled={!text || !validateInputAddresses(receiver)} onClick={() => sendMsg(receiver, text)}><SendButtonText>></SendButtonText></SendButton>
       </MessageInputContainer>
       </MessageBox>
