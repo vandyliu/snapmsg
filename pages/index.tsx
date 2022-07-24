@@ -39,6 +39,22 @@ const Container = styled.div`
   margin: 1em;
 `
 
+const Recipients = styled.div`
+margin-bottom: 0em;
+`
+
+const RecipientsText = styled.textarea`
+  font-size: 1em;
+  padding: 7px 9px;
+  border-radius: 4px;
+  border: 2px solid #666;
+  margin-bottom: -0.5em;
+  width: 31em;
+  resize: none;
+  height: 5.5em;
+  min-height: 1em;
+`
+
 const Label = styled.h4`
   font-size: 1em;
   padding-bottom: 2px;
@@ -283,6 +299,11 @@ const Home: NextPage = () => {
         </ul>
       </details>
       { currentUser ? <>
+      <Recipients>
+        <Label htmlFor={"recipientstext"}>Messages with</Label>
+        <RecipientsText readOnly id={'recipientstext'} value={messages && Object.keys(messages).join('\n')}>
+        </RecipientsText>
+      </Recipients>
       <Label htmlFor={"receiverInput"}>Receiver</Label>
       <ReceiverInput placeholder={'0x'} id={"receiverInput"} value={receiver} onChange={(e) => {setReceiver(e.target.value.toLowerCase())}} />
       <MessageBox>
