@@ -248,7 +248,6 @@ const Home: NextPage = () => {
           },
         ],
       });
-
       if (response) {
         console.log('success', 'current user', currentUser)
         setText('');
@@ -283,15 +282,13 @@ const Home: NextPage = () => {
           </ul>
         </ul>
       </details>
-      <br />
-
       { currentUser ? <>
       <Label htmlFor={"receiverInput"}>Receiver</Label>
       <ReceiverInput placeholder={'0x'} id={"receiverInput"} value={receiver} onChange={(e) => {setReceiver(e.target.value.toLowerCase())}} />
       <MessageBox>
       <MessageList messages={receiverMessages} />
       <MessageInputContainer>
-        <MessageInput onChange={(e) => {setText(e.target.value)}} />
+        <MessageInput value={text} onChange={(e) => {setText(e.target.value)}} />
         <SendButton><CameraButtonText>📷</CameraButtonText></SendButton>
         <SendButton disabled={!text || !validateInputAddresses(receiver)} onClick={() => sendMsg(receiver, text)}><SendButtonText>></SendButtonText></SendButton>
       </MessageInputContainer>

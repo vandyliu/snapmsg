@@ -2,13 +2,12 @@ import styled from 'styled-components';
 
 const MsgSelf = styled.div`
     display: flex;
-    max-width: 75%;
+    max-width: 100%;
     flex-direction: column;
     position: relative;
     word-wrap: break-word;
     align-self: flex-end;
     align-items: flex-end;
-    width: fit-content;
 `
  
 const MsgThem = styled.div`
@@ -17,14 +16,13 @@ const MsgThem = styled.div`
     position: relative;
     word-wrap: break-word;
     align-items: flex-start;
-    width: fit-content;
 `
 
 const MessageBubbleSelf = styled.div`
     display: flex;
     border-radius: 1.15rem;
     line-height: 0;
-    max-width: 75%;
+    max-width: 100%;
     padding: 0.5rem .875rem;
     position: relative;
     word-wrap: break-word;
