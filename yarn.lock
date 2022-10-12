@@ -2245,13 +2245,13 @@
   dependencies:
     "@metamask/controllers" "^30.0.0"
 
-"@metamask/snap-types@^0.21.0":
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/@metamask/snap-types/-/snap-types-0.21.0.tgz#51380240a97a6ef492dca9d5bcb2d7c6f6c8a023"
-  integrity sha512-wyamdpiZqVfrHjAysnplVQexEisH8b00XTv6F8kTyKd4pbRTBswmOOc1DhBbi2+7Fw2J5a7pdLb9+/MRMwnztg==
+"@metamask/snap-types@^0.22.2":
+  version "0.22.2"
+  resolved "https://registry.yarnpkg.com/@metamask/snap-types/-/snap-types-0.22.2.tgz#590cfdd6088d77df6d103ceabdab4ae4d1bdcf03"
+  integrity sha512-8/KVU53ctZra7lQ9pjMScOXCBT7b3cmy2nilFDUHRPxEpw9XEgVtQVeekV7AVsXMcLEZdck+8tj5l7KUj5qxHg==
   dependencies:
     "@metamask/providers" "^9.0.0"
-    "@metamask/snap-utils" "^0.21.0"
+    "@metamask/snap-utils" "^0.22.2"
     "@metamask/types" "^1.1.0"
 
 "@metamask/snap-utils@^0.18.0":
@@ -2261,20 +2261,23 @@
   dependencies:
     "@chainsafe/strip-comments" "^1.0.7"
 
-"@metamask/snap-utils@^0.21.0":
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/@metamask/snap-utils/-/snap-utils-0.21.0.tgz#7ed5df1d0c25f2660ce36dcc436f3608d72e92d5"
-  integrity sha512-bfGvCIZd1zfuRUFN68F0HrIHfsCmoh/j6/Sm5sj6v7mIGyERbgpu0mYEwKIRjuCtV5GkGimXU6H2Tof+ZWrLtQ==
+"@metamask/snap-utils@^0.22.2":
+  version "0.22.2"
+  resolved "https://registry.yarnpkg.com/@metamask/snap-utils/-/snap-utils-0.22.2.tgz#040b2fc1c6ccd406b049084d90542f77e9a51572"
+  integrity sha512-hhQHsHS6xkwmqvPrDnrXgu8IIEtaPwLr7PUwqIDSHBeBgbhlsbS7R63nhMtrRxognLmnWj0xWvAvoz25o+Q/Rw==
   dependencies:
     "@babel/core" "^7.18.6"
-    "@metamask/snap-types" "^0.21.0"
-    "@metamask/utils" "^2.0.0"
+    "@metamask/snap-types" "^0.22.2"
+    "@metamask/utils" "^3.1.0"
+    "@noble/hashes" "^1.1.3"
+    "@scure/base" "^1.1.1"
     ajv "^8.11.0"
     eth-rpc-errors "^4.0.3"
     fast-deep-equal "^3.1.3"
     rfdc "^1.3.0"
     semver "^7.3.7"
     ses "^0.15.17"
+    superstruct "^0.16.5"
 
 "@metamask/snaps-browserify-plugin@^0.18.0":
   version "0.18.0"
@@ -2323,6 +2326,16 @@
   integrity sha512-AZ63AhRxAZXll+/SEiyEXgrxuAL4yOj0ny4V36VgPmTDvt+7GrmVJWrQF3o5PZZWV6ooaHZ9291RZHRcKZm0HA==
   dependencies:
     fast-deep-equal "^3.1.3"
+
+"@metamask/utils@^3.1.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@metamask/utils/-/utils-3.2.0.tgz#816a26383438d0112244bfd6406ebde2d5c9edb3"
+  integrity sha512-cRPZ+S2e7Z9a2mFb+XKYHyEQ9gHN3bU5XV9qkdF0SZX6qsS7/ZKQ6VFXuYUbW69gl2kwyabPLNtVixq1tY6b6Q==
+  dependencies:
+    "@types/debug" "^4.1.7"
+    debug "^4.3.4"
+    fast-deep-equal "^3.1.3"
+    superstruct "^0.16.5"
 
 "@next/env@12.2.3":
   version "12.2.3"
@@ -2414,6 +2427,11 @@
     jsbi "^3.1.5"
     sha.js "^2.4.11"
 
+"@noble/hashes@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.1.3.tgz#360afc77610e0a61f3417e497dcf36862e4f8111"
+  integrity sha512-CE0FCR57H2acVI5UOzIGSSIYxZ6v/HOhDR0Ro9VLyhnzLwx0o8W1mmgaqlEUx4049qJDlIBRztv5k+MM8vbO3A==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -2457,6 +2475,11 @@
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.4.tgz#0c8b74c50f29ee44f423f7416829c0bf8bb5eb27"
   integrity sha512-LwzQKA4vzIct1zNZzBmRKI9QuNpLgTQMEjsQLf3BXuGYb3QPTP4Yjf6mkdX+X1mYttZ808QpOwAzZjv28kq7DA==
+
+"@scure/base@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@scure/base/-/base-1.1.1.tgz#ebb651ee52ff84f420097055f4bf46cfba403938"
+  integrity sha512-ZxOhsSyxYwLJj3pLZCefNitxsj093tb2vq90mp2txoYeBqbcjDjqFhyM8eUjq/uFm6zJ+mUuqxlS2FkuSY1MTA==
 
 "@sinclair/typebox@^0.24.1":
   version "0.24.20"
@@ -2539,6 +2562,13 @@
     "@types/filesystem" "*"
     "@types/har-format" "*"
 
+"@types/debug@^4.1.7":
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.7.tgz#7cc0ea761509124709b8b2d1090d8f6c17aadb82"
+  integrity sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==
+  dependencies:
+    "@types/ms" "*"
+
 "@types/deep-freeze-strict@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@types/deep-freeze-strict/-/deep-freeze-strict-1.1.0.tgz#447a6a2576191344aa42310131dd3df5c41492c4"
@@ -2596,6 +2626,11 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
+
+"@types/ms@*":
+  version "0.7.31"
+  resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
+  integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
 "@types/node@*":
   version "18.0.0"
@@ -8213,6 +8248,11 @@ subarg@^1.0.0:
   integrity sha512-RIrIdRY0X1xojthNcVtgT9sjpOGagEUKpZdgBUi054OEPFo282yg+zE+t1Rj3+RqKq2xStL7uUHhY+AjbC4BXg==
   dependencies:
     minimist "^1.1.0"
+
+superstruct@^0.16.5:
+  version "0.16.5"
+  resolved "https://registry.yarnpkg.com/superstruct/-/superstruct-0.16.5.tgz#7b7e1f1f8bf6ab141c660e501ac57026e42c09c0"
+  integrity sha512-GBa1VPdCUDAIrsoMVy2lzE/hKQnieUlc1JVoVzJ2YLx47SoPY4AqF85Ht1bPg5r+8I0v54GbaRdNTnYQ0p+T+Q==
 
 supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
